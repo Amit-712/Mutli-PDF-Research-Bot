@@ -1,0 +1,316 @@
+/* =========================================================
+   ResearchGPT — custom styling
+   Injected via st.markdown(..., unsafe_allow_html=True)
+   Variables are re-pointed by app.py based on dark/light toggle
+   ========================================================= */
+
+:root {
+    --rg-bg: #ffffff;
+    --rg-bg-secondary: #f7f8fa;
+    --rg-sidebar-bg: #f3f4f7;
+    --rg-text: #1a1d23;
+    --rg-text-muted: #6b7280;
+    --rg-border: #e5e7eb;
+    --rg-accent: #6d5ef9;
+    --rg-accent-soft: #ece9ff;
+    --rg-user-bubble: #6d5ef9;
+    --rg-user-text: #ffffff;
+    --rg-ai-bubble: #f1f2f6;
+    --rg-ai-text: #1a1d23;
+    --rg-success: #16a34a;
+    --rg-warning: #d97706;
+    --rg-danger: #dc2626;
+    --rg-radius: 14px;
+    --rg-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Theme variable VALUES are injected inline per-run by app.py (see THEME_VARS).
+   This avoids relying on a [data-theme] attribute that Streamlit's rerun cycle
+   can wipe before paint. Defaults below only apply if app.py injection fails. */
+
+/* ---------- App shell ---------- */
+html, body, .stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stHeader"],
+[data-testid="stMain"],
+[data-testid="block-container"] {
+    background-color: var(--rg-bg) !important;
+    color: var(--rg-text) !important;
+}
+
+/* Streamlit's default text elements must inherit our color or they go
+   invisible against dark backgrounds */
+.stMarkdown, .stMarkdown p, .stCaption, label, .stText {
+    color: var(--rg-text) !important;
+}
+
+section[data-testid="stSidebar"] *,
+section[data-testid="stSidebar"] {
+    color: var(--rg-text) !important;
+}
+
+section[data-testid="stSidebar"] > div {
+    background-color: var(--rg-sidebar-bg) !important;
+}
+
+/* ---------- Sidebar brand ---------- */
+.rg-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 2px 18px 2px;
+    border-bottom: 1px solid var(--rg-border);
+    margin-bottom: 16px;
+}
+.rg-logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6d5ef9, #a78bfa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    flex-shrink: 0;
+}
+.rg-logo-text {
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--rg-text);
+    line-height: 1.1;
+}
+.rg-logo-sub {
+    font-size: 11px;
+    color: var(--rg-text-muted);
+}
+
+/* ---------- Sidebar section labels ---------- */
+.rg-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rg-text-muted);
+    margin: 18px 0 8px 2px;
+}
+
+/* ---------- Document list cards ---------- */
+.rg-doc-card {
+    background: var(--rg-bg-secondary);
+    border: 1px solid var(--rg-border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.rg-doc-name {
+    font-weight: 600;
+    color: var(--rg-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.rg-doc-meta {
+    font-size: 11px;
+    color: var(--rg-text-muted);
+}
+
+/* ---------- Chat rows (ChatGPT/Claude-style alignment) ----------
+   Each message is one .rg-row containing an .rg-avatar and a .rg-bubble.
+   Assistant rows keep normal order (avatar left, bubble left-aligned).
+   User rows reverse the flex order (avatar right, bubble right-aligned). */
+.rg-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 14px 0;
+    width: 100%;
+}
+
+.rg-row-ai {
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.rg-row-user {
+    flex-direction: row-reverse;
+    justify-content: flex-start; /* with row-reverse, this pins content to the right */
+}
+
+.rg-avatar {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    line-height: 1;
+    background: var(--rg-bg-secondary);
+    border: 1px solid var(--rg-border);
+}
+
+.rg-row .rg-bubble {
+    max-width: 75%;
+}
+
+@media (max-width: 640px) {
+    .rg-row .rg-bubble {
+        max-width: 82%;
+    }
+    .rg-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+}
+
+/* ---------- Chat bubbles ---------- */
+div[data-testid="stChatMessage"] {
+    background: transparent;
+    padding: 4px 0;
+}
+
+.rg-bubble {
+    border-radius: var(--rg-radius);
+    padding: 12px 16px;
+    line-height: 1.55;
+    font-size: 14.5px;
+    box-shadow: var(--rg-shadow);
+    max-width: 100%;
+    word-wrap: break-word;
+    display: inline-block;
+    width: auto;
+}
+.rg-bubble-user {
+    background: var(--rg-user-bubble) !important;
+    color: var(--rg-user-text) !important;
+}
+.rg-bubble-user, .rg-bubble-user * {
+    color: var(--rg-user-text) !important;
+}
+.rg-bubble-ai {
+    background: var(--rg-ai-bubble) !important;
+    color: var(--rg-ai-text) !important;
+}
+.rg-bubble-ai, .rg-bubble-ai * {
+    color: var(--rg-ai-text) !important;
+}
+.rg-bubble p {
+    margin: 0 0 6px 0;
+}
+.rg-bubble p:last-child {
+    margin-bottom: 0;
+}
+.rg-bubble pre {
+    background: rgba(0,0,0,0.35);
+    border-radius: 8px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    font-size: 13px;
+}
+.rg-bubble code {
+    font-family: "SF Mono", "Fira Code", monospace;
+    background: rgba(0,0,0,0.25);
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+.rg-bubble pre code {
+    background: transparent;
+    padding: 0;
+}
+
+/* ---------- Citation cards ---------- */
+.rg-citation-card {
+    border: 1px solid var(--rg-border);
+    background: var(--rg-bg-secondary);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 6px;
+    font-size: 13px;
+}
+.rg-citation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+.rg-citation-name {
+    font-weight: 600;
+    color: var(--rg-text);
+}
+.rg-citation-score {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--rg-accent-soft);
+    color: var(--rg-accent);
+    white-space: nowrap;
+}
+.rg-citation-page {
+    font-size: 12px;
+    color: var(--rg-text-muted);
+}
+
+/* ---------- Summary panel ---------- */
+.rg-summary-section {
+    border: 1px solid var(--rg-border);
+    border-radius: var(--rg-radius);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    background: var(--rg-bg-secondary);
+}
+.rg-summary-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--rg-accent);
+}
+
+/* ---------- Buttons ---------- */
+.stButton button {
+    border-radius: 10px !important;
+    border: 1px solid var(--rg-border) !important;
+    font-weight: 600 !important;
+    transition: all 0.15s ease;
+}
+.stButton button:hover {
+    border-color: var(--rg-accent) !important;
+    color: var(--rg-accent) !important;
+}
+
+div[data-testid="stChatInput"] textarea {
+    border-radius: 12px !important;
+    border: 1px solid var(--rg-border) !important;
+    background-color: var(--rg-bg-secondary) !important;
+    color: var(--rg-text) !important;
+}
+div[data-testid="stChatInput"] textarea:focus {
+    border-color: var(--rg-accent) !important;
+    box-shadow: 0 0 0 1px var(--rg-accent) !important;
+}
+div[data-testid="stChatInput"] {
+    background-color: var(--rg-bg) !important;
+}
+
+/* ---------- Misc ---------- */
+hr {
+    border-color: var(--rg-border);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+    .rg-bubble {
+        font-size: 13.5px;
+        padding: 10px 12px;
+    }
+    .rg-logo-text {
+        font-size: 15px;
+    }
+}

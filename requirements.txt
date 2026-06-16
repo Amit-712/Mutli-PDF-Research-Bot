@@ -18,6 +18,8 @@ accelerate
 
 huggingface_hub
 
+markdown
+
 torch
 
 python-dotenv
